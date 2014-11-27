@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.0.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
@@ -8,6 +9,15 @@ gem 'sqlite3'
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sass-rails', '~> 4.0.0'
 gem "paperclip", "~> 4.2"
+group :production do
+	gem 'pg'
+	gem 'rails_12factor'
+end
+
+group :development, :test do
+	gem 'sqlite3'
+end
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views

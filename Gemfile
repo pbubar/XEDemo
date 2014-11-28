@@ -8,7 +8,7 @@ gem 'rails', '4.0.0'
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sass-rails', '~> 4.0.0'
-gem "paperclip", github: 'thoughtbot/paperclip'
+gem "paperclip", '~> 4.2'
 group :production do
 	gem 'pg'
 	gem 'rails_12factor'

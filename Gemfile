@@ -9,6 +9,9 @@ gem 'rails', '4.0.0'
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sass-rails', '~> 4.0.0'
 gem "paperclip", '~> 4.2'
+gem "cocaine", "0.5.4"
+gem "paperclip-dropbox", ">= 1.1.7"
+gem "figaro"
 group :production do
 	gem 'pg'
 	gem 'rails_12factor'

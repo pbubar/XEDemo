@@ -21,3 +21,11 @@ module Xedemo
     # config.i18n.default_locale = :de
   end
 end
+
+module Paperclip
+  class MediaTypeSpoofDetector
+    def spoofed?
+      false
+    end
+  end
+end

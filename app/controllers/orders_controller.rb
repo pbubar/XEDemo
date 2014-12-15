@@ -11,23 +11,11 @@ class OrdersController < ApplicationController
   def purchases
     @orders = Order.all.where(buyer: current_user).order("created_at DESC")
   end
-  
-  def index
-    @orders = Order.all
-    respond_with(@orders)
-  end
-
-  def show
-    respond_with(@order)
-  end
 
   def new
     @order = Order.new
     @listing = Listing.find(params[:listing_id])
     respond_with(@order)
-  end
-
-  def edit
   end
 
   def create
@@ -36,21 +24,27 @@ class OrdersController < ApplicationController
     @listing = Listing.find(params[:listing_id])
     @seller = @listing.user
 
-    @order.listing_id = @listing_id
+    @order.listing_id = @listing.id
     @order.seller_id = @seller.id
+    
+    Stripe.api_key = ENV["STRIPE_API_KEY"]
+    token = params[:stripeToken]
+
+    begin
+      change = Stripe::Charge.create(
+        :amount => (@listing.price * 100).floor,
+        :currency => "usd",
+        :card => token
+        )
+      flash[:notice] = "Thanks for ordering"
+    rescue Stripe::CardError => e
+      flash[:danger] = e.message
+    end
+
     @order.save
-    flash[:notice] = 'Order was successfully created.' if @order.save
-    respond_with(@order, :location => root_url, notice: "Order created")
+    if @order.save
+    respond_with(@order, :location => root_url)
   end
-
-  def update
-    @order.update(order_params)
-    respond_with(@order)
-  end
-
-  def destroy
-    @order.destroy
-    respond_with(@order)
   end
 
   private
